@@ -8,8 +8,9 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var takePhotoButton: UIButton!
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var capturePhotoOutput: AVCapturePhotoOutput?
     var capturedImage: UIImage?
+    var pvc: PhotoViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,16 +60,17 @@ class ViewController: UIViewController {
     
     @IBAction func openPhotoLibraryButton(sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            var imagePicker = UIImagePickerController()
-            imagePicker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary;
-            imagePicker.allowsEditing = true
+            imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage?
+        dismiss(animated: true, completion: nil)
         let vc : PhotoViewController! = self.storyboard!.instantiateViewController(withIdentifier: "photoViewController") as! PhotoViewController
         vc.newImage = image
         self.show(vc, sender: vc)

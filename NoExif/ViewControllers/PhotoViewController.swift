@@ -28,6 +28,10 @@ class PhotoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print(exifDict!)
     }
     
+    @IBAction func savePhoto() {
+        UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return exifDict.count
     }
