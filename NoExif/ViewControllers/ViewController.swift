@@ -54,19 +54,28 @@ class ViewController: UIViewController {
         photoSettings.isHighResolutionPhotoEnabled = true
         photoSettings.flashMode = .off
         capturePhotoOutput.capturePhoto(with: photoSettings, delegate: self as AVCapturePhotoCaptureDelegate)
-        
-        
+    }
+    
+    @IBAction func openPhotoLibraryButton(sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            var imagePicker = UIImagePickerController()
+            imagePicker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePicker.sourceType = .photoLibrary;
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let vc : PhotoViewController! = self.storyboard!.instantiateViewController(withIdentifier: "photoViewController") as! PhotoViewController
+        vc.newImage = image
+        self.show(vc, sender: vc)
     }
     
     @IBAction func unwindToThisViewController(segue: UIStoryboardSegue) {
         
     }
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var destViewController: PhotoViewController = segue.destination as! PhotoViewController
-        destViewController.newImage = capturedImage
-    }
-    */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

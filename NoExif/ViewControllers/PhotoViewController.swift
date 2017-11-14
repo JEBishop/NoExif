@@ -22,6 +22,9 @@ class PhotoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         imageData = UIImageJPEGRepresentation(newImage, 1.0)! as CFData
         let imageSource = CGImageSourceCreateWithData(imageData, nil)
         let exifDict = CGImageSourceCopyPropertiesAtIndex(imageSource!, 0, nil) as NSDictionary?
+        if let gpsData = exifDict?[kCGImagePropertyGPSDictionary as String] {
+            print(gpsData)
+        }
         print(exifDict!)
     }
     
