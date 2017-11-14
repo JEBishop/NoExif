@@ -1,5 +1,5 @@
 # NoExif
-NoExif - remove/modify EXIF data from photos [iOS]
+NoExif - Remove/modify EXIF data from photos through camera or photo library [iOS]
 
 TODO v1:
 - Bring image from photo library to PhotoViewController
