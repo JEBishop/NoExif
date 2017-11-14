@@ -20,7 +20,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var capturePhotoOutput: AVCapturePhotoOutput?
     var capturedImage: UIImage?
-    var pvc: PhotoViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
